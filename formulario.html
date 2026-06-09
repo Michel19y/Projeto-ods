@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> AquaVida | Formulário</title>
+    <link rel="stylesheet" href="css/style.css" />
+    
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">💧</span>
+        <span class="logo-text">Aqua<span>Vida</span></span>
+      </a>
+      <nav aria-label="Menu principal">
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="ods.html">Os ODS</a></li>
+            <li><a href="formulario.html">Cadastrar Ideia</a></li>'
+          <li><a href="resultados.html">Ideias Cadastradas</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+<section>
+  <h2 class="section-title">Cadastre sua Ideia Sustentável</h2>
+  <p class="section-subtitle">Compartilhe uma ação prática para promover o uso consciente da água, a redução de desperdícios ou a equidade no acesso aos recursos.</p>
+
+  <form id="form-ideia" class="form-card">
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="nome">Nome Completo</label>
+        <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+      </div>
+
+      <div class="form-group">
+        <label for="ods">ODS Relacionado</label>
+        <select id="ods" name="ods" required>
+          <option value="" disabled selected>Selecione um ODS...</option>
+          <option value="ODS 6">ODS 6 - Água Limpa e Saneamento</option>
+          <option value="ODS 10">ODS 10 - Redução das Desigualdades</option>
+          <option value="ODS 12">ODS 12 - Consumo e Produção Responsáveis</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Nível de Impacto Esperado</label>
+        <div class="radio-group">
+          <label><input type="radio" name="impacto" value="Baixo" required> Baixo</label>
+          <label><input type="radio" name="impacto" value="Médio" checked> Médio</label>
+          <label><input type="radio" name="impacto" value="Alto"> Alto</label>
+        </div>
+      </div>
+
+      <div class="form-group full">
+        <label for="descricao">Descreva sua ideia ou ação</label>
+        <textarea id="descricao" name="descricao" placeholder="Ex: Implementar um sistema de reuso de água da chuva para regar o jardim..." required></textarea>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-verde">Cadastrar Ideia</button>
+    </div>
+  </form>
+
+  <div id="mensagem-sucesso">
+    Ideia cadastrada com sucesso! Obrigado por contribuir com o AquaVida.
+  </div>
+</section>
+<footer>
+    <p>
+      <strong>AquaVida</strong> &mdash; Projeto desenvolvido para a disciplina de Introdução ao Desenvolvimento Web &bull;
+      IFSC Lages &bull; 2026
+    </p>
+    <p style="margin-top: 0.5rem; font-size: 0.82rem;">Alinhado aos ODS 6, 10 e 12 da Agenda 2030 &ndash; ONU</p>
+  </footer>
+</body>
+</html>
