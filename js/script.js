@@ -2,17 +2,39 @@
 // AquaVida - script.js
 // ============================================
 
-// ===== UTILITÁRIOS =====
+const SUPABASE_URL     = "https://yxfksbosxvqutvydekxd.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4ZmtzYm9zeHZxdXR2eWRla3hkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDY2ODksImV4cCI6MjA5NzgyMjY4OX0.F5K5-ldDiV89pTNyMahyysmZqzfN1AWq9963GZWrS2c";
 
-function salvarIdeia(ideia) {
-  const ideias = carregarIdeias();
-  ideias.unshift(ideia); // mais recente primeiro
-  localStorage.setItem('aquavida_ideias', JSON.stringify(ideias));
+// ===== UTILITÁRIOS SUPABASE =====
+
+async function salvarIdeia(payload) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/ideias`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "apikey": SUPABASE_ANON_KEY,
+      "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+      "Prefer": "return=minimal"
+    },
+    body: JSON.stringify(payload)
+  });
+
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.message || "Erro ao salvar.");
+  }
 }
 
-function carregarIdeias() {
-  const dados = localStorage.getItem('aquavida_ideias');
-  return dados ? JSON.parse(dados) : [];
+async function carregarIdeias() {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/ideias?order=criado_em.desc`, {
+    headers: {
+      "apikey": SUPABASE_ANON_KEY,
+      "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
+    }
+  });
+
+  if (!res.ok) throw new Error("Erro ao carregar ideias.");
+  return await res.json();
 }
 
 // ===== FORMULÁRIO (formulario.html) =====
@@ -20,65 +42,69 @@ function carregarIdeias() {
 const formulario = document.getElementById('form-ideia');
 
 if (formulario) {
-  formulario.addEventListener('submit', function (e) {
+  formulario.addEventListener('submit', async function (e) {
     e.preventDefault();
 
-    const nome      = document.getElementById('nome').value.trim();
-    const email     = document.getElementById('email').value.trim();
-    const ods       = document.getElementById('ods').value;
+    const nome     = document.getElementById('nome').value.trim();
+    const email    = document.getElementById('email').value.trim();
+    const ods      = document.getElementById('ods').value;
     const descricao = document.getElementById('descricao').value.trim();
-    const impacto   = document.querySelector('input[name="impacto"]:checked');
+    const impacto  = document.querySelector('input[name="impacto"]:checked');
 
-    if (!nome || !email || !ods || !descricao || !impacto) {
+    if (!nome || !ods || !descricao || !impacto) {
       alert('Por favor, preencha todos os campos obrigatórios.');
       return;
     }
 
-    const ideia = {
-      id:       Date.now(),
-      nome,
-      email,
-      ods,
-      descricao,
-      impacto:  impacto.value, // "Alto", "Médio" ou "Baixo"
-      data:     new Date().toLocaleDateString('pt-BR')
-    };
+    const payload = { nome, ods, descricao, impacto: impacto.value };
+    if (email) payload.email = email;
 
-    salvarIdeia(ideia);
+    const btnSubmit = formulario.querySelector('button[type="submit"]');
+    btnSubmit.disabled = true;
+    btnSubmit.textContent = "Enviando...";
 
-    formulario.reset();
+    try {
+      await salvarIdeia(payload);
 
-    const msg = document.getElementById('mensagem-sucesso');
-    if (msg) {
-      msg.style.display = 'block';
-      setTimeout(() => { msg.style.display = 'none'; }, 4000);
+      formulario.reset();
+      formulario.style.display = "none";
+
+      const msg = document.getElementById('mensagem-sucesso');
+      if (msg) msg.style.display = 'block';
+
+    } catch (err) {
+      alert("Erro ao cadastrar: " + err.message);
+      btnSubmit.disabled = false;
+      btnSubmit.textContent = "✔ Cadastrar Ideia";
     }
   });
 }
 
 // ===== RESULTADOS (resultados.html) =====
 
-function renderizarIdeias(filtroOds = 'todos', filtroImpacto = 'todos') {
+async function renderizarIdeias(filtroOds = 'todos', filtroImpacto = 'todos') {
   const container = document.getElementById('lista-ideias');
   const semDados  = document.getElementById('sem-dados');
   const contador  = document.getElementById('contador-ideias');
 
   if (!container) return;
 
-  let ideias = carregarIdeias();
+  let ideias;
+  try {
+    ideias = await carregarIdeias();
+  } catch (err) {
+    if (semDados) semDados.style.display = 'block';
+    if (contador) contador.textContent = '0 ideias encontradas';
+    return;
+  }
 
-  if (filtroOds !== 'todos') {
-    ideias = ideias.filter(i => i.ods === filtroOds);
-  }
-  if (filtroImpacto !== 'todos') {
-    ideias = ideias.filter(i => i.impacto === filtroImpacto);
-  }
+  if (filtroOds !== 'todos')     ideias = ideias.filter(i => i.ods === filtroOds);
+  if (filtroImpacto !== 'todos') ideias = ideias.filter(i => i.impacto === filtroImpacto);
 
   if (contador) {
     contador.textContent = `${ideias.length} ideia${ideias.length !== 1 ? 's' : ''} encontrada${ideias.length !== 1 ? 's' : ''}`;
   }
 
-  // Limpar cards anteriores (mantém o #sem-dados)
   Array.from(container.children).forEach(child => {
     if (child.id !== 'sem-dados') child.remove();
   });
@@ -109,6 +135,10 @@ function renderizarIdeias(filtroOds = 'todos', filtroImpacto = 'todos') {
   };
 
   ideias.forEach(ideia => {
+    const data = ideia.criado_em
+      ? new Date(ideia.criado_em).toLocaleDateString('pt-BR')
+      : '';
+
     const card = document.createElement('article');
     card.className = 'card-ideia';
     card.innerHTML = `
@@ -121,7 +151,7 @@ function renderizarIdeias(filtroOds = 'todos', filtroImpacto = 'todos') {
         <span class="impacto-badge ${impactoClasse[ideia.impacto] || ''}">
           ${impactoIcone[ideia.impacto] || ideia.impacto}
         </span>
-        <span>📅 ${ideia.data}</span>
+        ${data ? `<span>📅 ${data}</span>` : ''}
       </div>
     `;
     container.appendChild(card);
