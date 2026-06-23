@@ -6,7 +6,7 @@
 
 function salvarIdeia(ideia) {
   const ideias = carregarIdeias();
-  ideias.push(ideia);
+  ideias.unshift(ideia); // mais recente primeiro
   localStorage.setItem('aquavida_ideias', JSON.stringify(ideias));
 }
 
@@ -23,12 +23,11 @@ if (formulario) {
   formulario.addEventListener('submit', function (e) {
     e.preventDefault();
 
-    const nome = document.getElementById('nome').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const ods = document.getElementById('ods').value;
+    const nome      = document.getElementById('nome').value.trim();
+    const email     = document.getElementById('email').value.trim();
+    const ods       = document.getElementById('ods').value;
     const descricao = document.getElementById('descricao').value.trim();
-    const impacto = document.querySelector('input[name="impacto"]:checked');
-    const cidade = document.getElementById('cidade').value.trim();
+    const impacto   = document.querySelector('input[name="impacto"]:checked');
 
     if (!nome || !email || !ods || !descricao || !impacto) {
       alert('Por favor, preencha todos os campos obrigatórios.');
@@ -36,19 +35,19 @@ if (formulario) {
     }
 
     const ideia = {
-      id: Date.now(),
+      id:       Date.now(),
       nome,
       email,
       ods,
       descricao,
-      impacto: impacto.value,
-      cidade: cidade || 'Não informada',
-      data: new Date().toLocaleDateString('pt-BR')
+      impacto:  impacto.value, // "Alto", "Médio" ou "Baixo"
+      data:     new Date().toLocaleDateString('pt-BR')
     };
 
     salvarIdeia(ideia);
 
     formulario.reset();
+
     const msg = document.getElementById('mensagem-sucesso');
     if (msg) {
       msg.style.display = 'block';
@@ -61,8 +60,8 @@ if (formulario) {
 
 function renderizarIdeias(filtroOds = 'todos', filtroImpacto = 'todos') {
   const container = document.getElementById('lista-ideias');
-  const semDados = document.getElementById('sem-dados');
-  const contador = document.getElementById('contador');
+  const semDados  = document.getElementById('sem-dados');
+  const contador  = document.getElementById('contador-ideias');
 
   if (!container) return;
 
@@ -76,7 +75,7 @@ function renderizarIdeias(filtroOds = 'todos', filtroImpacto = 'todos') {
   }
 
   if (contador) {
-    contador.textContent = `${ideias.length} ideia(s) encontrada(s)`;
+    contador.textContent = `${ideias.length} ideia${ideias.length !== 1 ? 's' : ''} encontrada${ideias.length !== 1 ? 's' : ''}`;
   }
 
   // Limpar cards anteriores (mantém o #sem-dados)
@@ -92,21 +91,21 @@ function renderizarIdeias(filtroOds = 'todos', filtroImpacto = 'todos') {
   if (semDados) semDados.style.display = 'none';
 
   const odsNomes = {
-    'ODS 6': 'ODS 6 – Água Limpa',
-    'ODS 10': 'ODS 10 – Redução das Desigualdades',
+    'ODS 6':  'ODS 6 – Água Limpa',
+    'ODS 10': 'ODS 10 – Desigualdades',
     'ODS 12': 'ODS 12 – Consumo Responsável'
   };
 
   const impactoIcone = {
-    'alto': '🔥 Alto',
-    'medio': '⚡ Médio',
-    'baixo': '💧 Baixo'
+    'Alto':  '🟢 Alto',
+    'Médio': '🟠 Médio',
+    'Baixo': '🔵 Baixo'
   };
 
   const impactoClasse = {
-    'alto': 'impacto-alto',
-    'medio': 'impacto-medio',
-    'baixo': 'impacto-baixo'
+    'Alto':  'impacto-alto',
+    'Médio': 'impacto-medio',
+    'Baixo': 'impacto-baixo'
   };
 
   ideias.forEach(ideia => {
@@ -119,10 +118,9 @@ function renderizarIdeias(filtroOds = 'todos', filtroImpacto = 'todos') {
       </div>
       <p class="ideia-descricao">${ideia.descricao}</p>
       <div class="ideia-footer">
-        <span class="impacto-badge ${impactoClasse[ideia.impacto]}">
+        <span class="impacto-badge ${impactoClasse[ideia.impacto] || ''}">
           ${impactoIcone[ideia.impacto] || ideia.impacto}
         </span>
-        <span>📍 ${ideia.cidade}</span>
         <span>📅 ${ideia.data}</span>
       </div>
     `;
@@ -131,7 +129,7 @@ function renderizarIdeias(filtroOds = 'todos', filtroImpacto = 'todos') {
 }
 
 // Inicializar filtros em resultados.html
-const filtroOdsEl = document.getElementById('filtro-ods');
+const filtroOdsEl     = document.getElementById('filtro-ods');
 const filtroImpactoEl = document.getElementById('filtro-impacto');
 
 if (filtroOdsEl || filtroImpactoEl) {
@@ -139,12 +137,19 @@ if (filtroOdsEl || filtroImpactoEl) {
 
   if (filtroOdsEl) {
     filtroOdsEl.addEventListener('change', () => {
-      renderizarIdeias(filtroOdsEl.value, filtroImpactoEl ? filtroImpactoEl.value : 'todos');
+      renderizarIdeias(
+        filtroOdsEl.value || 'todos',
+        filtroImpactoEl ? filtroImpactoEl.value || 'todos' : 'todos'
+      );
     });
   }
+
   if (filtroImpactoEl) {
     filtroImpactoEl.addEventListener('change', () => {
-      renderizarIdeias(filtroOdsEl ? filtroOdsEl.value : 'todos', filtroImpactoEl.value);
+      renderizarIdeias(
+        filtroOdsEl ? filtroOdsEl.value || 'todos' : 'todos',
+        filtroImpactoEl.value || 'todos'
+      );
     });
   }
 }

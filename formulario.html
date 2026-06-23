@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> AquaVida | Formulário</title>
-    <link rel="stylesheet" href="css/style.css" />
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AquaVida | Cadastrar Ideia</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+
   <header>
     <div class="header-inner">
       <a href="index.html" class="logo">
@@ -18,68 +18,133 @@
         <ul>
           <li><a href="index.html">Início</a></li>
           <li><a href="ods.html">Os ODS</a></li>
-            <li><a href="formulario.html">Cadastrar Ideia</a></li>'
+          <li><a href="formulario.html" class="ativo">Cadastrar Ideia</a></li>
           <li><a href="resultados.html">Ideias Cadastradas</a></li>
         </ul>
       </nav>
     </div>
   </header>
-<section>
-  <h2 class="section-title">Cadastre sua Ideia Sustentável</h2>
-  <p class="section-subtitle">Compartilhe uma ação prática para promover o uso consciente da água, a redução de desperdícios ou a equidade no acesso aos recursos.</p>
 
-  <form id="form-ideia" class="form-card">
-    <div class="form-grid">
-      <div class="form-group">
-        <label for="nome">Nome Completo</label>
-        <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
-      </div>
+  <!-- Banner da página -->
+  <div class="page-banner">
+    <div class="page-banner-content">
+      <span class="page-banner-tag">💡 Contribua com o AquaVida</span>
+      <h1>Cadastre sua Ideia Sustentável</h1>
+      <p>Compartilhe uma ação prática para promover o uso consciente da água, a redução de desperdícios ou a equidade no acesso aos recursos.</p>
+    </div>
+  </div>
 
-      <div class="form-group">
-        <label for="email">E-mail</label>
-        <input type="email" id="email" name="email" placeholder="seu@email.com" required>
-      </div>
+  <main>
+    <div class="form-layout">
 
-      <div class="form-group">
-        <label for="ods">ODS Relacionado</label>
-        <select id="ods" name="ods" required>
-          <option value="" disabled selected>Selecione um ODS...</option>
-          <option value="ODS 6">ODS 6 - Água Limpa e Saneamento</option>
-          <option value="ODS 10">ODS 10 - Redução das Desigualdades</option>
-          <option value="ODS 12">ODS 12 - Consumo e Produção Responsáveis</option>
-        </select>
-      </div>
+      <!-- Card lateral informativo -->
+      <aside class="form-sidebar">
+        <div class="sidebar-card">
+          <div class="sidebar-icon">🚰</div>
+          <h3>ODS 6</h3>
+          <p>Água Limpa e Saneamento</p>
+        </div>
+        <div class="sidebar-card">
+          <div class="sidebar-icon">⚖️</div>
+          <h3>ODS 10</h3>
+          <p>Redução das Desigualdades</p>
+        </div>
+        <div class="sidebar-card">
+          <div class="sidebar-icon">♻️</div>
+          <h3>ODS 12</h3>
+          <p>Consumo e Produção Responsáveis</p>
+        </div>
+        <div class="sidebar-dica">
+          <strong>💬 Dica</strong>
+          <p>Sua ideia pode ser algo simples que você já pratica no dia a dia — toda ação conta!</p>
+        </div>
+      </aside>
 
-      <div class="form-group">
-        <label>Nível de Impacto Esperado</label>
-        <div class="radio-group">
-          <label><input type="radio" name="impacto" value="Baixo" required> Baixo</label>
-          <label><input type="radio" name="impacto" value="Médio" checked> Médio</label>
-          <label><input type="radio" name="impacto" value="Alto"> Alto</label>
+      <!-- Formulário principal -->
+      <div class="form-main">
+        <form id="form-ideia" class="form-card" novalidate>
+
+          <div class="form-section-label">Seus dados</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="nome">Nome Completo <span class="obrigatorio">*</span></label>
+              <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+            </div>
+            <div class="form-group">
+              <label for="email">E-mail <span class="obrigatorio">*</span></label>
+              <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+            </div>
+          </div>
+
+          <div class="form-section-label">Sobre a ideia</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="ods">ODS Relacionado <span class="obrigatorio">*</span></label>
+              <select id="ods" name="ods" required>
+                <option value="" disabled selected>Selecione um ODS...</option>
+                <option value="ODS 6">🚰 ODS 6 — Água Limpa e Saneamento</option>
+                <option value="ODS 10">⚖️ ODS 10 — Redução das Desigualdades</option>
+                <option value="ODS 12">♻️ ODS 12 — Consumo e Produção Responsáveis</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Nível de Impacto Esperado <span class="obrigatorio">*</span></label>
+              <div class="impacto-group">
+                <label class="impacto-option impacto-baixo">
+                  <input type="radio" name="impacto" value="Baixo" required>
+                  <span class="impacto-label">
+                    <span class="impacto-dot"></span>
+                    Baixo
+                  </span>
+                </label>
+                <label class="impacto-option impacto-medio">
+                  <input type="radio" name="impacto" value="Médio" checked>
+                  <span class="impacto-label">
+                    <span class="impacto-dot"></span>
+                    Médio
+                  </span>
+                </label>
+                <label class="impacto-option impacto-alto">
+                  <input type="radio" name="impacto" value="Alto">
+                  <span class="impacto-label">
+                    <span class="impacto-dot"></span>
+                    Alto
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group full">
+              <label for="descricao">Descreva sua ideia ou ação <span class="obrigatorio">*</span></label>
+              <textarea id="descricao" name="descricao" rows="5"
+                placeholder="Ex: Implementar um sistema de reuso de água da chuva para regar o jardim..." required></textarea>
+              <span class="campo-dica">Seja específico — quanto mais detalhes, mais sua ideia inspira outras pessoas.</span>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-verde">✔ Cadastrar Ideia</button>
+          </div>
+
+        </form>
+
+        <div id="mensagem-sucesso">
+          ✅ Ideia cadastrada com sucesso! Obrigado por contribuir com o AquaVida.
         </div>
       </div>
 
-      <div class="form-group full">
-        <label for="descricao">Descreva sua ideia ou ação</label>
-        <textarea id="descricao" name="descricao" placeholder="Ex: Implementar um sistema de reuso de água da chuva para regar o jardim..." required></textarea>
-      </div>
     </div>
+  </main>
 
-    <div class="form-actions">
-      <button type="submit" class="btn btn-verde">Cadastrar Ideia</button>
-    </div>
-  </form>
-
-  <div id="mensagem-sucesso">
-    Ideia cadastrada com sucesso! Obrigado por contribuir com o AquaVida.
-  </div>
-</section>
-<footer>
+  <footer>
     <p>
       <strong>AquaVida</strong> &mdash; Projeto desenvolvido para a disciplina de Introdução ao Desenvolvimento Web &bull;
       IFSC Lages &bull; 2026
     </p>
     <p style="margin-top: 0.5rem; font-size: 0.82rem;">Alinhado aos ODS 6, 10 e 12 da Agenda 2030 &ndash; ONU</p>
   </footer>
+
+  <script src="js/script.js"></script>
 </body>
 </html>
