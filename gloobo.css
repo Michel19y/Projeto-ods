@@ -1,0 +1,288 @@
+
+    html, body { overflow: hidden; height: 100%; }
+
+    .globe-wrapper {
+      position: relative;
+      height: calc(100vh - 73px);
+      background: #000d1a;
+      overflow: hidden;
+    }
+
+    #globeViz {
+      position: absolute;
+      inset: 0;
+    }
+
+    /* ---- PAINEL LATERAL ---- */
+    .painel {
+      position: absolute;
+      top: 0; right: 0; bottom: 0;
+      width: 360px;
+      background: rgba(4, 14, 30, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-left: 1px solid rgba(66, 165, 245, 0.25);
+      color: #e0f0ff;
+      z-index: 20;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .painel.ativo {
+      transform: translateX(0);
+    }
+
+    .painel-topo {
+      padding: 1.5rem 1.5rem 0;
+      position: sticky;
+      top: 0;
+      background: rgba(4, 14, 30, 0.97);
+      border-bottom: 1px solid rgba(66, 165, 245, 0.15);
+      z-index: 1;
+    }
+
+    .btn-fechar {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255,255,255,0.08);
+      border: none;
+      border-radius: 50%;
+      width: 34px;
+      height: 34px;
+      color: #90caf9;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .btn-fechar:hover { background: rgba(229, 57, 53, 0.5); color: #fff; }
+
+    .painel-pais-nome {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.25rem;
+      padding-right: 2rem;
+    }
+
+    .painel-pais-nivel {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.5px;
+    }
+
+    .nivel-otimo    { background: #1b5e20; color: #a5d6a7; }
+    .nivel-bom      { background: #1a3e1a; color: #81c784; }
+    .nivel-moderado { background: #4a2a00; color: #ffcc80; }
+    .nivel-ruim     { background: #4a1500; color: #ffab91; }
+    .nivel-critico  { background: #3b0000; color: #ef9a9a; }
+    .nivel-sem-dados{ background: #1a2a3a; color: #90a4ae; }
+
+    .painel-corpo {
+      padding: 1.25rem 1.5rem 2rem;
+    }
+
+    /* Barras de progresso */
+    .metrica {
+      margin-bottom: 1.25rem;
+    }
+
+    .metrica-titulo {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #90caf9;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 0.4rem;
+    }
+
+    .metrica-valor-linha {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .metrica-num {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+      min-width: 55px;
+    }
+
+    .barra-fundo {
+      flex: 1;
+      height: 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .barra-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.7s ease;
+    }
+
+    .metrica-detalhe {
+      font-size: 0.78rem;
+      color: #607d8b;
+    }
+
+    .divisor {
+      border: none;
+      border-top: 1px solid rgba(66, 165, 245, 0.15);
+      margin: 1.25rem 0;
+    }
+
+    .painel-resumo {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: #b0bec5;
+    }
+
+    .painel-fonte {
+      font-size: 0.75rem;
+      color: #546e7a;
+      margin-top: 1rem;
+    }
+
+    .painel-sem-dados {
+      padding: 2rem;
+      text-align: center;
+      color: #546e7a;
+    }
+
+    .painel-sem-dados i {
+      font-size: 2.5rem;
+      display: block;
+      margin-bottom: 1rem;
+      color: #37474f;
+    }
+
+    /* ---- LEGENDA ---- */
+    .legenda {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      background: rgba(4, 14, 30, 0.85);
+      border: 1px solid rgba(66, 165, 245, 0.2);
+      border-radius: 10px;
+      padding: 0.85rem 1.1rem;
+      z-index: 10;
+      color: #b0bec5;
+    }
+
+    .legenda-titulo {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #78909c;
+      margin-bottom: 0.6rem;
+    }
+
+    .legenda-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      margin-bottom: 0.3rem;
+      color: #90a4ae;
+    }
+
+    .legenda-cor {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    /* ---- DICA ---- */
+    .globe-hint {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(4, 14, 30, 0.8);
+      border: 1px solid rgba(66, 165, 245, 0.2);
+      border-radius: 20px;
+      padding: 0.4rem 1.1rem;
+      font-size: 0.8rem;
+      color: #78909c;
+      z-index: 10;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    /* ---- LOADING ---- */
+    #globe-loading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 30;
+      background: #000d1a;
+      gap: 1rem;
+      color: #90caf9;
+    }
+
+    #globe-loading i {
+      font-size: 2.5rem;
+    }
+
+    #globe-loading p {
+      font-size: 1rem;
+    }
+
+    /* ---- TOOLTIP ---- */
+    #tooltip-globo {
+      position: absolute;
+      pointer-events: none;
+      background: rgba(4, 14, 30, 0.9);
+      border: 1px solid rgba(66, 165, 245, 0.3);
+      border-radius: 6px;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.82rem;
+      color: #e0f0ff;
+      z-index: 25;
+      white-space: nowrap;
+      display: none;
+    }
+
+    /* ---- RESPONSIVIDADE ---- */
+    @media (max-width: 768px) {
+      .globe-wrapper { height: calc(100vh - 105px); }
+
+      .painel {
+        top: auto;
+        width: 100%;
+        height: 55vh;
+        border-left: none;
+        border-top: 1px solid rgba(66, 165, 245, 0.25);
+        transform: translateY(100%);
+        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .painel.ativo { transform: translateY(0); }
+
+      .legenda { display: none; }
+
+      .globe-hint {
+        bottom: 0.75rem;
+        font-size: 0.72rem;
+      }
+    }
