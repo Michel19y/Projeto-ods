@@ -6,8 +6,49 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background-color: #000d1a; /* sobrescreve o #f0f4f8 do style.css */
+  background-color: #000d1a;
 }
+
+/* ---- Header exclusivo do mapa ---- */
+header.header-mapa {
+  background: linear-gradient(135deg, #0d3b6e, #1565c0);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+  height: 52px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.35);
+  z-index: 50;
+  position: relative;
+}
+
+.btn-voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #e0f0ff;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.3rem 0.75rem;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  transition: background 0.2s;
+}
+.btn-voltar:hover { background: rgba(255,255,255,0.22); }
+
+.header-mapa-titulo {
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.header-mapa-titulo i { color: #64b5f6; }
 
 .globe-wrapper {
   position: relative;
@@ -310,53 +351,47 @@ body {
 
 /* ---- Responsividade ---- */
 
-/* globo.css carrega DEPOIS de style.css → mesma especificidade sobrescreve sem !important */
-
-@media (max-width: 600px) {
-  /* Esconde logo IFSC — salva ~50px de altura vertical */
-  .logo-img { display: none; }
-
-  /* Header volta para linha única (style.css forçava column) */
-  header .header-inner {
-    flex-direction: row;
-    align-items: center;
-    flex-wrap: nowrap;
-    padding: 0.4rem 0.75rem;
-    gap: 0.5rem;
+/* Desktop: modal como painel lateral direito — globo continua visível */
+@media (min-width: 768px) {
+  .modal-overlay {
+    background: transparent;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 0.75rem;
+    pointer-events: none;
   }
-
-  /* Nav rola horizontalmente em vez de quebrar linha */
-  nav ul {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+  .modal-card {
+    pointer-events: all;
+    max-height: calc(100dvh - 5rem);
+    box-shadow: -6px 0 32px rgba(0,0,0,0.6);
   }
-  nav ul::-webkit-scrollbar { display: none; }
-  nav ul li a { white-space: nowrap; }
-
-  /* Footer escondido no mobile — economiza ~70px para o globo */
-  footer { display: none; }
 }
 
-@media (max-width: 768px) {
-  /* Legenda do topo — evita clipping pelo overflow:hidden do wrapper */
+/* Mobile: legenda do topo */
+@media (max-width: 767px) {
   .legenda {
     top: 0.75rem;
     bottom: auto;
     left: 0.75rem;
-    padding: 0.55rem 0.7rem;
+    padding: 0.5rem 0.65rem;
     max-width: calc(100vw - 1.5rem);
   }
-  .legenda-titulo { font-size: 0.62rem; margin-bottom: 0.4rem; }
-  .legenda-item   { font-size: 0.67rem; margin-bottom: 0.18rem; }
-  .legenda-cor    { width: 10px; height: 10px; border-radius: 2px; }
+  .legenda-titulo { font-size: 0.6rem; margin-bottom: 0.35rem; }
+  .legenda-item   { font-size: 0.65rem; margin-bottom: 0.15rem; }
+  .legenda-cor    { width: 9px; height: 9px; border-radius: 2px; }
   .globe-hint     { bottom: 0.75rem; font-size: 0.7rem; }
-}
+  footer          { display: none; }
 
-@media (max-width: 480px) {
-  .modal-card { padding: 1.5rem 1.1rem 1.5rem; border-radius: 14px; }
-  .modal-nome { font-size: 1.4rem; }
-  .modal-metricas { gap: 0.6rem; }
-  .mc-valor { font-size: 1.7rem; }
+  /* Modal como bottom sheet */
+  .modal-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+  .modal-card {
+    max-width: 100%;
+    width: 100%;
+    border-radius: 16px 16px 0 0;
+    max-height: 72vh;
+    box-shadow: 0 -6px 30px rgba(0,0,0,0.5);
+  }
 }
