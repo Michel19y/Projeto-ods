@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Cadastre sua ideia sustentável no AquaVida e contribua com os ODS 6, 10 e 12 da Agenda 2030." />
   <title>AquaVida | Cadastrar Ideia</title>
   <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -21,6 +22,7 @@
         <ul>
           <li><a href="index.html">Início</a></li>
           <li><a href="ods.html">Os ODS</a></li>
+          <li><a href="globo.html">Mapa Mundial</a></li>
           <li><a href="formulario.html" class="ativo">Cadastrar Ideia</a></li>
           <li><a href="resultados.html">Ideias Cadastradas</a></li>
         </ul>
@@ -69,6 +71,7 @@
             <div class="form-group">
               <label for="nome">Nome Completo <span class="obrigatorio">*</span></label>
               <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+              <span class="erro-campo" id="erro-nome"></span>
             </div>
             <div class="form-group">
               <label for="email">E-mail</label>
@@ -86,6 +89,7 @@
                 <option value="ODS 10">ODS 10 — Redução das Desigualdades</option>
                 <option value="ODS 12">ODS 12 — Consumo e Produção Responsáveis</option>
               </select>
+              <span class="erro-campo" id="erro-ods"></span>
             </div>
 
             <div class="form-group">
@@ -119,11 +123,13 @@
               <label for="descricao">Descreva sua ideia ou ação <span class="obrigatorio">*</span></label>
               <textarea id="descricao" name="descricao" rows="5"
                 placeholder="Ex: Implementar um sistema de reuso de água da chuva para regar o jardim..." required></textarea>
+              <span class="erro-campo" id="erro-descricao"></span>
               <span class="campo-dica">Seja específico — quanto mais detalhes, mais sua ideia inspira outras pessoas.</span>
             </div>
           </div>
 
           <div class="form-actions">
+            <div class="erro-geral" id="erro-geral"></div>
             <button type="submit" class="btn btn-verde">
               <i class="fa-solid fa-check"></i> Cadastrar Ideia
             </button>

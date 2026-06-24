@@ -14,11 +14,12 @@ body {
   color: #37474f;
   line-height: 1.7;
 }
-img {
-
-  width: 270PX;
-  height: 90PX;
+.logo-img {
+  width: 270px;
+  height: 90px;
   display: block;
+  max-width: 100%;
+  object-fit: contain;
 }
 
 /* ===== HEADER / NAV ===== */
@@ -166,15 +167,15 @@ nav ul li a.ativo {
 }
 
 .btn-primary {
-  background: transparent;
-  color: #ffffff;
-  border: 2px solid rgba(255, 255, 255, 0.7);
+  background: #ffffff;
+  color: #0d3b6e;
+  border: 2px solid #ffffff;
 }
 
 .btn-primary:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.9);
   transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
 
 .btn-secondary {
@@ -875,26 +876,11 @@ footer strong {
     gap: 0.5rem;
   }
 
-  /* Configuração padrão do logo (Desktop e Mobile) */
-header .logo {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  text-decoration: none;
-}
+  .logo-img {
+    width: 160px;
+    height: 54px;
+  }
 
-header .logo img {
-  width: 40px;      /* Tamanho fixo e pequeno */
-  height: 40px;     /* Mantém a proporção quadrada */
-  display: block;   /* Remove espaçamentos estranhos */
-  object-fit: contain; /* Garante que a imagem não distorça */
-}
-
-/* O ícone Font Awesome (se você usar os dois juntos) */
-header .logo-icon {
-  font-size: 2rem;
-  color: #00A2E8;
-}
   nav ul {
     gap: 0.1rem;
     flex-wrap: wrap;
@@ -994,6 +980,65 @@ header .logo-icon {
     grid-template-columns: 1fr;
   }
 }
+
+/* ===== VALIDAÇÃO DE FORMULÁRIO ===== */
+.erro-campo {
+  color: #e53935;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.erro-geral {
+  color: #e53935;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  min-height: 1.2em;
+}
+
+/* ===== LOADING IDEIAS ===== */
+#loading-ideias {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 3rem 1.5rem;
+  color: #607d8b;
+  font-size: 1rem;
+  grid-column: 1 / -1;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== ARTIGOS ODS (ods.html) ===== */
+.ods-article {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+  border-left: 6px solid;
+}
+
+.ods-article h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.ods-article p + p {
+  margin-top: 0.75rem;
+}
+
+.ods-article-6  { border-color: #0277bd; }
+.ods-article-6  h3 { color: #0277bd; }
+
+.ods-article-10 { border-color: #e53935; }
+.ods-article-10 h3 { color: #c62828; }
+
+.ods-article-12 { border-color: #f57c00; }
+.ods-article-12 h3 { color: #e65100; }
 
 /* Telas muito pequenas (até 360px) */
 @media (max-width: 360px) {
