@@ -309,35 +309,37 @@ body {
 
 /* ---- Responsividade ---- */
 
-/* Header compacto na página do globo — evita que o empilhamento do
-   header mobile coma altura do globo */
+/* globo.css carrega DEPOIS de style.css → mesma especificidade sobrescreve sem !important */
+
 @media (max-width: 600px) {
-  /* Logo IFSC ocupa muito espaço vertical — esconde no mobile */
+  /* Esconde logo IFSC — salva ~50px de altura vertical */
   .logo-img { display: none; }
 
-  /* Header em linha única */
+  /* Header volta para linha única (style.css forçava column) */
   header .header-inner {
-    flex-direction: row !important;
-    align-items: center !important;
-    flex-wrap: nowrap !important;
-    padding: 0.4rem 0.75rem !important;
-    gap: 0.5rem !important;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+    padding: 0.4rem 0.75rem;
+    gap: 0.5rem;
   }
 
-  /* Nav em scroll horizontal — sem quebrar linha */
+  /* Nav rola horizontalmente em vez de quebrar linha */
   nav ul {
-    flex-wrap: nowrap !important;
+    flex-wrap: nowrap;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    padding-bottom: 2px;
   }
   nav ul::-webkit-scrollbar { display: none; }
   nav ul li a { white-space: nowrap; }
+
+  /* Footer escondido no mobile — economiza ~70px para o globo */
+  footer { display: none; }
 }
 
 @media (max-width: 768px) {
-  /* Legenda posicionada do topo — evita clipping pelo overflow:hidden */
+  /* Legenda do topo — evita clipping pelo overflow:hidden do wrapper */
   .legenda {
     top: 0.75rem;
     bottom: auto;

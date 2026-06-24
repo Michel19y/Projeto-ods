@@ -197,6 +197,12 @@ window.addEventListener('resize', () => {
   myGlobe.width(wrapper.clientWidth).height(wrapper.clientHeight);
 });
 
+// Roboto pode carregar depois do script e fazer o header reflowing,
+// mudando a altura do wrapper — redimensiona o canvas depois das fontes
+document.fonts.ready.then(() => {
+  myGlobe.width(wrapper.clientWidth).height(wrapper.clientHeight);
+});
+
 // ---- Carrega TopoJSON local (105 KB) ----
 fetch('paises.topo.json')
   .then(r => r.json())
