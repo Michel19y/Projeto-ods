@@ -1,8 +1,16 @@
-html, body { overflow: hidden; height: 100%; }
+html { height: 100%; }
+
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 
 .globe-wrapper {
   position: relative;
-  height: calc(100vh - 73px);
+  flex: 1;
+  min-height: 0;
   background: #000d1a;
   overflow: hidden;
 }
@@ -300,9 +308,15 @@ html, body { overflow: hidden; height: 100%; }
 
 /* ---- Responsividade ---- */
 @media (max-width: 768px) {
-  .globe-wrapper { height: calc(100vh - 105px); }
-  .legenda { display: none; }
-  .globe-hint { bottom: 0.75rem; font-size: 0.72rem; }
+  .legenda {
+    bottom: 3.2rem;
+    left: 0.75rem;
+    padding: 0.55rem 0.7rem;
+  }
+  .legenda-titulo { font-size: 0.62rem; margin-bottom: 0.4rem; }
+  .legenda-item   { font-size: 0.67rem; margin-bottom: 0.18rem; }
+  .legenda-cor    { width: 10px; height: 10px; border-radius: 2px; }
+  .globe-hint     { bottom: 0.75rem; font-size: 0.7rem; }
 }
 
 @media (max-width: 480px) {
