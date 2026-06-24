@@ -14,6 +14,12 @@ body {
   color: #37474f;
   line-height: 1.7;
 }
+img {
+
+  width: 270PX;
+  height: 90PX;
+  display: block;
+}
 
 /* ===== HEADER / NAV ===== */
 header {
