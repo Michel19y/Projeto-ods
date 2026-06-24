@@ -45,6 +45,7 @@ header .logo {
 
 header .logo-icon {
   font-size: 2rem;
+  color: #00A2E8; /* Adicionei a cor azul aqui */
 }
 
 header .logo-text {
@@ -92,9 +93,8 @@ nav ul li a.ativo {
 .hero-bg {
   position: absolute;
   inset: 0;
-  background: url("../img/images.jpg")
-    center / cover no-repeat;
-  filter: brightness(0.4);
+  background: url("../img/images.jpg") center / cover no-repeat;
+  
   z-index: 0;
 }
 
