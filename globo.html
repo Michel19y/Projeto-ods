@@ -6,15 +6,12 @@
   <meta name="description" content="Explore o mapa mundial interativo com dados de acesso à água potável por país — AquaVida." />
   <title>AquaVida | Mapa da Água no Mundo</title>
   <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
-  
-  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />    
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="globo.css" />
-  
 </head>
 <body>
 
@@ -37,25 +34,11 @@
     </div>
   </header>
 
+  <!-- Globo 3D -->
   <div class="globe-wrapper">
-
     <div id="globeViz"></div>
-
     <div id="tooltip-globo"></div>
 
-    <!-- Painel lateral de informações -->
-    <div id="painel" class="painel" role="complementary" aria-label="Informações do país">
-      <div class="painel-topo">
-        <button class="btn-fechar" id="btn-fechar-painel" aria-label="Fechar painel">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-        <div id="painel-nome" class="painel-pais-nome"></div>
-        <span id="painel-nivel" class="painel-pais-nivel"></span>
-      </div>
-      <div class="painel-corpo" id="painel-corpo"></div>
-    </div>
-
-    <!-- Legenda de cores -->
     <div class="legenda" aria-label="Legenda do mapa">
       <div class="legenda-titulo">% com água segura</div>
       <div class="legenda-item"><div class="legenda-cor" style="background:#1b5e20"></div> ≥ 95% — Excelente</div>
@@ -74,7 +57,63 @@
       <i class="fa-solid fa-spinner fa-spin"></i>
       <p>Carregando mapa mundial...</p>
     </div>
+  </div>
 
+  <!-- Modal de informações do país -->
+  <div id="modal-pais" class="modal-overlay" hidden aria-modal="true" role="dialog" aria-labelledby="modal-nome">
+    <div class="modal-card">
+
+      <button class="modal-fechar" id="btn-modal-fechar" aria-label="Fechar">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="modal-header">
+        <div id="modal-nome" class="modal-nome"></div>
+        <span id="modal-nivel" class="modal-nivel-badge"></span>
+      </div>
+
+      <!-- Grade 2×2: água, saneamento, proteção social, consumo -->
+      <div class="modal-metricas" id="modal-metricas">
+
+        <div class="metrica-card">
+          <span class="mc-ods-badge mc-ods-6">ODS 6</span>
+          <div class="mc-icon"><i class="fa-solid fa-droplet"></i></div>
+          <div class="mc-valor" id="m-agua">--</div>
+          <div class="barra-fundo"><div class="barra-fill" id="b-agua"></div></div>
+          <div class="mc-label">Água Potável Segura</div>
+        </div>
+
+        <div class="metrica-card">
+          <span class="mc-ods-badge mc-ods-6">ODS 6</span>
+          <div class="mc-icon"><i class="fa-solid fa-toilet"></i></div>
+          <div class="mc-valor" id="m-san">--</div>
+          <div class="barra-fundo"><div class="barra-fill" id="b-san"></div></div>
+          <div class="mc-label">Saneamento Básico</div>
+        </div>
+
+        <div class="metrica-card">
+          <span class="mc-ods-badge mc-ods-10">ODS 10</span>
+          <div class="mc-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+          <div class="mc-valor" id="m-prot">--</div>
+          <div class="barra-fundo"><div class="barra-fill" id="b-prot"></div></div>
+          <div class="mc-label">Cobertura de Proteção Social</div>
+        </div>
+
+        <div class="metrica-card">
+          <span class="mc-ods-badge mc-ods-12">ODS 12</span>
+          <div class="mc-icon"><i class="fa-solid fa-recycle"></i></div>
+          <div class="mc-valor" id="m-cons">--</div>
+          <div class="barra-fundo"><div class="barra-fill" id="b-cons"></div></div>
+          <div class="mc-label">Consumo Sustentável</div>
+        </div>
+
+      </div>
+
+      <hr class="modal-divisor" />
+      <p id="modal-resumo" class="modal-resumo"></p>
+      <p id="modal-fonte" class="modal-fonte"></p>
+
+    </div>
   </div>
 
   <script src="//unpkg.com/topojson-client@3/dist/topojson-client.min.js"></script>

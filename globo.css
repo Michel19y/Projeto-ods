@@ -1,0 +1,313 @@
+html, body { overflow: hidden; height: 100%; }
+
+.globe-wrapper {
+  position: relative;
+  height: calc(100vh - 73px);
+  background: #000d1a;
+  overflow: hidden;
+}
+
+#globeViz {
+  position: absolute;
+  inset: 0;
+}
+
+/* ---- TOOLTIP ---- */
+#tooltip-globo {
+  position: absolute;
+  pointer-events: none;
+  background: rgba(4, 14, 30, 0.92);
+  border: 1px solid rgba(66, 165, 245, 0.3);
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.82rem;
+  color: #e0f0ff;
+  z-index: 25;
+  white-space: nowrap;
+  display: none;
+}
+
+/* ---- LEGENDA ---- */
+.legenda {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  background: rgba(4, 14, 30, 0.85);
+  border: 1px solid rgba(66, 165, 245, 0.2);
+  border-radius: 10px;
+  padding: 0.85rem 1.1rem;
+  z-index: 10;
+  color: #b0bec5;
+}
+
+.legenda-titulo {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #78909c;
+  margin-bottom: 0.6rem;
+}
+
+.legenda-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  margin-bottom: 0.3rem;
+  color: #90a4ae;
+}
+
+.legenda-cor {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+/* ---- DICA ---- */
+.globe-hint {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(4, 14, 30, 0.8);
+  border: 1px solid rgba(66, 165, 245, 0.2);
+  border-radius: 20px;
+  padding: 0.4rem 1.1rem;
+  font-size: 0.8rem;
+  color: #78909c;
+  z-index: 10;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* ---- LOADING ---- */
+#globe-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 30;
+  background: #000d1a;
+  gap: 1rem;
+  color: #90caf9;
+}
+
+#globe-loading i { font-size: 2.5rem; }
+#globe-loading p { font-size: 1rem; }
+
+/* ============================================================
+   MODAL
+============================================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 8, 20, 0.78);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-overlay[hidden] { display: none !important; }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(28px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)   scale(1);    }
+}
+
+.modal-card {
+  background: #04121f;
+  border: 1px solid rgba(66, 165, 245, 0.28);
+  border-radius: 18px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 2rem;
+  position: relative;
+  color: #e0f0ff;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.7);
+  animation: slideUp 0.32s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+/* Scrollbar discreta no modal */
+.modal-card::-webkit-scrollbar { width: 5px; }
+.modal-card::-webkit-scrollbar-thumb { background: rgba(66,165,245,0.25); border-radius: 3px; }
+
+/* ---- Botão fechar ---- */
+.modal-fechar {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  color: #90caf9;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+.modal-fechar:hover { background: rgba(229,57,53,0.45); color: #fff; border-color: transparent; }
+
+/* ---- Cabeçalho do modal ---- */
+.modal-header {
+  margin-bottom: 1.5rem;
+  padding-right: 3rem;
+}
+
+.modal-nome {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 0.45rem;
+}
+
+.modal-nivel-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 11px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.nivel-otimo    { background: #1b5e20; color: #a5d6a7; }
+.nivel-bom      { background: #1a3e1a; color: #81c784; }
+.nivel-moderado { background: #4a2a00; color: #ffcc80; }
+.nivel-ruim     { background: #4a1500; color: #ffab91; }
+.nivel-critico  { background: #3b0000; color: #ef9a9a; }
+.nivel-sem-dados{ background: #1a2a3a; color: #90a4ae; }
+
+/* ---- Grade 2×2 de métricas ---- */
+.modal-metricas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.metrica-card {
+  background: rgba(255,255,255,0.035);
+  border: 1px solid rgba(66,165,245,0.12);
+  border-radius: 13px;
+  padding: 1.1rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.mc-ods-badge {
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  align-self: flex-start;
+  margin-bottom: 0.15rem;
+}
+
+.mc-ods-6  { background: #0d3b6e; color: #64b5f6; }
+.mc-ods-10 { background: #4a001a; color: #f48fb1; }
+.mc-ods-12 { background: #1a3300; color: #aed581; }
+
+.mc-icon {
+  font-size: 1.2rem;
+  color: #64b5f6;
+}
+
+.mc-valor {
+  font-size: 2.1rem;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+}
+
+.barra-fundo {
+  width: 100%;
+  height: 7px;
+  background: rgba(255,255,255,0.09);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 0.2rem;
+}
+
+.barra-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.75s ease;
+  width: 0%;
+}
+
+.mc-label {
+  font-size: 0.76rem;
+  color: #78909c;
+  line-height: 1.3;
+  margin-top: 0.15rem;
+}
+
+/* ---- Sem dados ---- */
+.modal-sem-dados {
+  padding: 2rem;
+  text-align: center;
+  color: #546e7a;
+}
+.modal-sem-dados i {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 1rem;
+  color: #37474f;
+}
+
+/* ---- Resumo e fonte ---- */
+.modal-divisor {
+  border: none;
+  border-top: 1px solid rgba(66,165,245,0.12);
+  margin: 1rem 0;
+}
+
+.modal-resumo {
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: #b0bec5;
+}
+
+.modal-fonte {
+  font-size: 0.75rem;
+  color: #546e7a;
+  margin-top: 0.9rem;
+}
+
+/* ---- Responsividade ---- */
+@media (max-width: 768px) {
+  .globe-wrapper { height: calc(100vh - 105px); }
+  .legenda { display: none; }
+  .globe-hint { bottom: 0.75rem; font-size: 0.72rem; }
+}
+
+@media (max-width: 480px) {
+  .modal-card { padding: 1.5rem 1.1rem 1.5rem; border-radius: 14px; }
+  .modal-nome { font-size: 1.4rem; }
+  .modal-metricas { gap: 0.6rem; }
+  .mc-valor { font-size: 1.7rem; }
+}
