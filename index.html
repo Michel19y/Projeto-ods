@@ -21,7 +21,7 @@
       </a>
       <nav aria-label="Menu principal">
         <ul>
-          <li><a href="index.html">Início</a></li>
+          <li><a href="index.html" class="ativo">Início</a></li>
           <li><a href="ods.html">Os ODS</a></li>
           <li><a href="formulario.html">Cadastrar Ideia</a></li>
           <li><a href="resultados.html">Ideias Cadastradas</a></li>
@@ -36,9 +36,8 @@
       <span class="hero-tag">ODS 6 · 10 · 12 — Agenda 2030</span>
       <h1 id="titulo-hero">Água é Direito,<br><span>Não Privilégio</span></h1>
       <p>
-        Conheça os Objetivos de Desenvolvimento Sustentável relacionados à água potável, 
-        ao consumo responsável e à redução das desigualdades. Compartilhe suas ideias 
-        e faça parte da mudança.
+        Cerca de 2,2 bilhões de pessoas no mundo ainda vivem sem acesso à água potável segura.
+        Conheça os ODS que guiam esse projeto, compartilhe suas ideias e faça parte da mudança.
       </p>
       <div class="hero-btns">
         <a href="formulario.html" class="btn btn-primary">Cadastrar minha ideia</a>
@@ -51,52 +50,55 @@
 
     <section aria-labelledby="titulo-stats">
       <h2 class="section-title" id="titulo-stats">O problema em números</h2>
-      <p class="section-subtitle">Dados globais que mostram a urgência de agir agora.</p>
+      <p class="section-subtitle">Dados globais que mostram a urgência de agir agora. Fontes: ONU, UNICEF/OMS 2023.</p>
       <div class="cards-stats">
         <div class="card-stat">
           <span class="stat-num">2,2 bi</span>
-          <span class="stat-label">pessoas sem acesso à água potável segura</span>
+          <span class="stat-label">pessoas sem acesso à água potável segura (ONU, 2022)</span>
         </div>
         <div class="card-stat">
-          <span class="stat-num">3,6 bi</span>
-          <span class="stat-label">pessoas sem saneamento básico adequado</span>
+          <span class="stat-num">3,5 bi</span>
+          <span class="stat-label">pessoas sem saneamento básico adequado (OMS/UNICEF, 2023)</span>
         </div>
         <div class="card-stat">
           <span class="stat-num">80%</span>
-          <span class="stat-label">das águas residuais voltam ao ambiente sem tratamento</span>
+          <span class="stat-label">das águas residuais voltam ao ambiente sem tratamento (PNUMA)</span>
         </div>
         <div class="card-stat">
-          <span class="stat-num">30%</span>
-          <span class="stat-label">dos alimentos produzidos no mundo são desperdiçados</span>
+          <span class="stat-num">70%</span>
+          <span class="stat-label">da água doce do planeta é consumida pela agricultura (FAO)</span>
         </div>
       </div>
     </section>
 
     <section aria-labelledby="titulo-ods">
       <h2 class="section-title" id="titulo-ods">Os objetivos que guiam este projeto</h2>
-      <p class="section-subtitle">O AquaVida é fundamentado em três ODS da Agenda 2030 da ONU.</p>
+      <p class="section-subtitle">Clique em cada card para saber mais sobre o ODS.</p>
       <div class="cards-ods">
 
-        <a href="ods.html#ods6" class="card-ods ods6">
+        <button class="card-ods ods6" onclick="abrirModal('ods6')" aria-haspopup="dialog">
           <div class="ods-numero">06</div>
           <i class="fa-solid fa-faucet-drip ods-icone"></i>
           <h3>ODS 6 – Água Limpa e Saneamento</h3>
           <p>Garantir disponibilidade e gestão sustentável da água e saneamento para todos até 2030.</p>
-        </a>
+          <span class="card-saiba-mais">Saiba mais <i class="fa-solid fa-arrow-right"></i></span>
+        </button>
 
-        <a href="ods.html#ods10" class="card-ods ods10">
+        <button class="card-ods ods10" onclick="abrirModal('ods10')" aria-haspopup="dialog">
           <div class="ods-numero">10</div>
           <i class="fa-solid fa-scale-balanced ods-icone"></i>
           <h3>ODS 10 – Redução das Desigualdades</h3>
           <p>Reduzir a desigualdade dentro dos países e entre eles, garantindo acesso equitativo a recursos essenciais.</p>
-        </a>
+          <span class="card-saiba-mais">Saiba mais <i class="fa-solid fa-arrow-right"></i></span>
+        </button>
 
-        <a href="ods.html#ods12" class="card-ods ods12">
+        <button class="card-ods ods12" onclick="abrirModal('ods12')" aria-haspopup="dialog">
           <div class="ods-numero">12</div>
           <i class="fa-solid fa-recycle ods-icone"></i>
           <h3>ODS 12 – Consumo e Produção Responsáveis</h3>
           <p>Assegurar padrões de consumo e produção sustentáveis, reduzindo o desperdício de água e recursos naturais.</p>
-        </a>
+          <span class="card-saiba-mais">Saiba mais <i class="fa-solid fa-arrow-right"></i></span>
+        </button>
 
       </div>
     </section>
@@ -116,6 +118,16 @@
 
   </main>
 
+  <!-- MODAL -->
+  <div id="modal-overlay" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-titulo" onclick="fecharModalOverlay(event)">
+    <div class="modal-box">
+      <button class="modal-fechar" onclick="fecharModal()" aria-label="Fechar">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div id="modal-conteudo"></div>
+    </div>
+  </div>
+
   <footer>
     <p>
       <strong>AquaVida</strong> &mdash; Projeto desenvolvido para a disciplina de Introdução ao Desenvolvimento Web &bull;
@@ -125,5 +137,127 @@
   </footer>
 
   <script src="js/script.js"></script>
+  <script>
+    const modais = {
+      ods6: {
+        cor: '#0277bd',
+        icone: 'fa-faucet-drip',
+        titulo: 'ODS 6 — Água Limpa e Saneamento',
+        conteudo: `
+          <p>O <strong>ODS 6</strong> foi adotado pela ONU em 2015 como parte da Agenda 2030. Seu objetivo central é garantir a disponibilidade e gestão sustentável da água e do saneamento para todos até 2030.</p>
+          <h4>Por que é urgente?</h4>
+          <ul>
+            <li>Segundo a OMS e UNICEF (2023), <strong>2,2 bilhões de pessoas</strong> ainda não têm acesso a água potável gerida de forma segura.</li>
+            <li><strong>3,5 bilhões</strong> carecem de saneamento básico adequado.</li>
+            <li>Doenças de veiculação hídrica — como cólera e diarreia — matam cerca de <strong>1,4 milhão de crianças por ano</strong> no mundo.</li>
+            <li>No Brasil, segundo o SNIS 2022, apenas <strong>53,1% da população</strong> tem acesso a coleta de esgoto.</li>
+          </ul>
+          <h4>Metas principais</h4>
+          <ul>
+            <li>Acesso universal e equitativo à água potável segura e acessível até 2030.</li>
+            <li>Saneamento e higiene adequados para todos, encerrando a defecação a céu aberto.</li>
+            <li>Melhoria da qualidade da água, reduzindo poluição e aumentando a reciclagem hídrica.</li>
+            <li>Proteção dos ecossistemas aquáticos — rios, lagos, aquíferos e zonas úmidas.</li>
+          </ul>
+          <h4>Ações práticas</h4>
+          <ul>
+            <li>Instalar redutores de vazão em torneiras e chuveiros.</li>
+            <li>Captar água da chuva para uso não potável (jardim, limpeza).</li>
+            <li>Reportar vazamentos na rede pública ao município.</li>
+            <li>Apoiar organizações que levam água potável a comunidades rurais.</li>
+          </ul>
+        `
+      },
+      ods10: {
+        cor: '#c62828',
+        icone: 'fa-scale-balanced',
+        titulo: 'ODS 10 — Redução das Desigualdades',
+        conteudo: `
+          <p>O <strong>ODS 10</strong> busca reduzir as desigualdades dentro e entre os países. No contexto hídrico, ele reconhece que o acesso à água potável e ao saneamento não é distribuído de forma igualitária — e que essa desigualdade perpetua a pobreza e a exclusão social.</p>
+          <h4>Desigualdade hídrica no mundo</h4>
+          <ul>
+            <li>Nas áreas rurais da África Subsaariana, mulheres e crianças percorrem em média <strong>6 km por dia</strong> para buscar água (ONU, 2023).</li>
+            <li>Famílias pobres em países em desenvolvimento pagam até <strong>10 vezes mais</strong> por litro de água do que famílias ricas com rede encanada.</li>
+            <li>No Brasil, comunidades quilombolas e indígenas têm acesso à água tratada muito inferior à média nacional.</li>
+            <li>A falta de banheiros nas escolas é uma das principais causas de evasão escolar entre meninas adolescentes.</li>
+          </ul>
+          <h4>Metas principais</h4>
+          <ul>
+            <li>Garantir que políticas sociais priorizem as populações mais vulneráveis.</li>
+            <li>Promover inclusão social, econômica e política de todos, independente de origem, gênero ou local de moradia.</li>
+            <li>Regular mercados e instituições para reduzir a desigualdade de resultados.</li>
+          </ul>
+          <h4>Ações práticas</h4>
+          <ul>
+            <li>Apoiar políticas de tarifas sociais de água para famílias de baixa renda.</li>
+            <li>Pressionar governos municipais por investimento em saneamento em bairros periféricos.</li>
+            <li>Valorizar e apoiar organizações que atuam em comunidades rurais e tradicionais.</li>
+          </ul>
+        `
+      },
+      ods12: {
+        cor: '#e65100',
+        icone: 'fa-recycle',
+        titulo: 'ODS 12 — Consumo e Produção Responsáveis',
+        conteudo: `
+          <p>O <strong>ODS 12</strong> propõe uma transformação nos padrões globais de consumo e produção, com foco na eficiência no uso de recursos naturais — especialmente a água.</p>
+          <h4>A pegada hídrica do consumo</h4>
+          <ul>
+            <li>Produzir <strong>1 kg de carne bovina</strong> consome em média 15.400 litros de água (Water Footprint Network).</li>
+            <li>Uma única calça jeans requer cerca de <strong>7.500 litros</strong> para ser produzida.</li>
+            <li>A indústria têxtil é responsável por <strong>20% da poluição hídrica industrial</strong> global (PNUMA).</li>
+            <li>O desperdício alimentar global equivale a desperdiçar <strong>250 km³ de água por ano</strong> — mais que o volume do Lago Baikal.</li>
+            <li>A agropecuária consome cerca de <strong>70% de toda a água doce</strong> utilizada no planeta (FAO).</li>
+          </ul>
+          <h4>Metas principais</h4>
+          <ul>
+            <li>Alcançar gestão sustentável e uso eficiente dos recursos naturais até 2030.</li>
+            <li>Reduzir pela metade o desperdício de alimentos per capita até 2030.</li>
+            <li>Gestão ambientalmente responsável de produtos químicos e resíduos.</li>
+            <li>Garantir que as empresas adotem e divulguem práticas de sustentabilidade.</li>
+          </ul>
+          <h4>Ações práticas</h4>
+          <ul>
+            <li>Reduzir o consumo de carne, especialmente bovina.</li>
+            <li>Evitar desperdício de alimentos — planejar compras e armazenar corretamente.</li>
+            <li>Preferir marcas com certificação de gestão hídrica responsável.</li>
+            <li>Reutilizar água de cozimento de legumes para regar plantas.</li>
+          </ul>
+        `
+      }
+    };
+
+    function abrirModal(id) {
+      const dados = modais[id];
+      const conteudo = document.getElementById('modal-conteudo');
+      conteudo.innerHTML = `
+        <div class="modal-header" style="border-color: ${dados.cor}">
+          <i class="fa-solid ${dados.icone}" style="color: ${dados.cor}; font-size: 2rem;"></i>
+          <h2 id="modal-titulo" style="color: ${dados.cor}">${dados.titulo}</h2>
+        </div>
+        <div class="modal-body">${dados.conteudo}</div>
+        <div class="modal-footer">
+          <a href="ods.html#${id}" class="btn btn-modal" style="background: ${dados.cor}">
+            Ver página completa <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      `;
+      document.getElementById('modal-overlay').classList.add('ativo');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function fecharModal() {
+      document.getElementById('modal-overlay').classList.remove('ativo');
+      document.body.style.overflow = '';
+    }
+
+    function fecharModalOverlay(e) {
+      if (e.target === document.getElementById('modal-overlay')) fecharModal();
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') fecharModal();
+    });
+  </script>
 </body>
 </html>
