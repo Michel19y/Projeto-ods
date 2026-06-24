@@ -90,6 +90,14 @@ nav ul li a.ativo {
   color: #ffffff;
 }
 
+/* Hamburger — visível só no mobile */
+.nav-hamburguer { display: none; }
+
+@keyframes navSlideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 /* ===== HERO ===== */
 .hero {
   position: relative;
@@ -865,30 +873,100 @@ footer strong {
 /* Mobile (até 600px) */
 @media (max-width: 600px) {
   /* Header */
+  /* Header: barra compacta */
   header {
-    padding: 0 1rem;
+    padding: 0 0.75rem;
   }
 
   header .header-inner {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0.75rem 0;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+    padding: 0.3rem 0;
     gap: 0.5rem;
   }
 
   .logo-img {
-    width: 160px;
-    height: 54px;
+    height: 26px;
+    width: auto;
+    flex-shrink: 0;
   }
 
-  nav ul {
-    gap: 0.1rem;
-    flex-wrap: wrap;
+  header .logo {
+    flex-shrink: 0;
+    gap: 0.25rem;
   }
 
-  nav ul li a {
-    padding: 0.4rem 0.6rem;
-    font-size: 0.8rem;
+  header .logo-text {
+    font-size: 0.9rem;
+  }
+
+  /* Botão hamburger */
+  .nav-hamburguer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 6px;
+    cursor: pointer;
+    padding: 0.4rem 0.55rem;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  .nav-hamburguer span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+  }
+
+  .nav-hamburguer.nav-aberto span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .nav-hamburguer.nav-aberto span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-hamburguer.nav-aberto span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Nav: escondida por padrão, dropdown ao abrir */
+  header nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: linear-gradient(180deg, #0d3b6e 0%, #1a4f8a 100%);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+    padding: 0.5rem 0.75rem 1.1rem;
+    animation: navSlideDown 0.2s ease;
+  }
+
+  header nav.nav-aberta {
+    display: block;
+  }
+
+  header nav ul {
+    flex-direction: column;
+    gap: 0.2rem;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow: visible;
+  }
+
+  header nav ul li a {
+    display: block;
+    padding: 0.7rem 0.85rem;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    white-space: normal;
   }
 
   /* Hero - Melhor legibilidade */
