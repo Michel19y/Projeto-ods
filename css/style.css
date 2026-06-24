@@ -875,6 +875,26 @@ footer strong {
     gap: 0.5rem;
   }
 
+  /* Configuração padrão do logo (Desktop e Mobile) */
+header .logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+header .logo img {
+  width: 40px;      /* Tamanho fixo e pequeno */
+  height: 40px;     /* Mantém a proporção quadrada */
+  display: block;   /* Remove espaçamentos estranhos */
+  object-fit: contain; /* Garante que a imagem não distorça */
+}
+
+/* O ícone Font Awesome (se você usar os dois juntos) */
+header .logo-icon {
+  font-size: 2rem;
+  color: #00A2E8;
+}
   nav ul {
     gap: 0.1rem;
     flex-wrap: wrap;
@@ -885,9 +905,15 @@ footer strong {
     font-size: 0.8rem;
   }
 
-  /* Hero */
+  /* Hero - Melhor legibilidade */
   .hero {
     min-height: 420px;
+    position: relative;
+  }
+
+  /* Escurecimento do fundo para destacar o texto */
+  .hero-bg {
+    filter: brightness(0.4);
   }
 
   .hero-content {
@@ -896,10 +922,12 @@ footer strong {
 
   .hero-content h1 {
     font-size: 1.75rem;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
   }
 
   .hero-content p {
     font-size: 0.95rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
   }
 
   .hero-btns {
@@ -932,15 +960,6 @@ footer strong {
     grid-template-columns: 1fr;
   }
 
-  /* Page banner */
-  .page-banner {
-    padding: 2rem 1rem;
-  }
-
-  .page-banner h1 {
-    font-size: 1.4rem;
-  }
-
   /* Form */
   .form-layout {
     padding: 0 1rem;
@@ -955,20 +974,11 @@ footer strong {
     grid-template-columns: 1fr;
   }
 
-  .form-group.full {
-    grid-column: 1;
-  }
-
-  .form-section-label {
-    margin-top: 1rem;
-  }
-
-  /* Sidebar */
+  /* Sidebar e Filtros */
   .form-sidebar {
     grid-template-columns: 1fr 1fr;
   }
 
-  /* Filtros */
   .filtros {
     flex-direction: column;
     align-items: flex-start;
@@ -979,21 +989,9 @@ footer strong {
     width: 100%;
   }
 
-  .contador {
-    margin-left: 0;
-  }
-
   /* Cards ideias */
   #lista-ideias {
     grid-template-columns: 1fr;
-  }
-
-  /* Botão verde */
-  .btn-verde {
-    width: 100%;
-    text-align: center;
-    font-size: 1rem;
-    padding: 0.85rem 1.5rem;
   }
 }
 
@@ -1012,7 +1010,6 @@ footer strong {
     padding: 0.35rem 0.5rem;
   }
 }
-
 /* ===== CARD ODS COMO BOTÃO ===== */
 .card-ods {
   text-align: left;
